@@ -22,9 +22,7 @@ import torchvision.transforms as transforms
 from geniusrise.core.data import BatchInput, BatchOutput, State
 from geniusrise.logging import setup_logger
 from geniusrise import Bolt
-from CustomOCRDataset import (
-    CustomOCRDataset,
-)  # Assuming CustomOCRDataset is in the same directory or properly installed
+from geniusrise_ocr.ocr.dataset import CustomOCRDataset
 
 
 class FineTuneTROCR(Bolt):
