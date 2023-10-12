@@ -60,7 +60,6 @@ class TrainImageClassifier(Bolt):
                 name: "TrainImageClassifier"
                 method: "process"
                 args:
-                    output_model_path: "/path/to/model.pth"
                     num_classes: 4
                     epochs: 10
                     batch_size: 32
@@ -82,7 +81,6 @@ class TrainImageClassifier(Bolt):
 
     def process(
         self,
-        output_model_path: str,
         num_classes: int = 4,
         epochs: int = 10,
         batch_size: int = 32,
@@ -92,7 +90,6 @@ class TrainImageClassifier(Bolt):
         📖 Train an image classifier using a ResNet-152 model.
 
         Args:
-            output_model_path (str): Path to save the trained model.
             num_classes (int): Number of classes of the images.
             epochs (Optional[int]): Number of training epochs. Default is 10.
             batch_size (Optional[int]): Batch size for training. Default is 32.
@@ -102,6 +99,8 @@ class TrainImageClassifier(Bolt):
         of `input.input_folder`. Each of these sub-folders should contain class-specific folders with images.
         The trained model is saved to the specified output path.
         """
+        output_model_path = self.output.output_folder + "/model.pth"
+
         # Data transformations
         transform = transforms.Compose(
             [
