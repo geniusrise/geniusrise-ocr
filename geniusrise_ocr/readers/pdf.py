@@ -19,7 +19,7 @@ import random
 from typing import List, Optional
 from PyPDF2 import PdfFileReader
 from pdf2image import convert_from_path
-from geniusrise.core.data import BatchInput, BatchOutput, State
+from geniusrise import BatchInput, BatchOutput, State
 from geniusrise.logging import setup_logger
 from geniusrise import Bolt
 

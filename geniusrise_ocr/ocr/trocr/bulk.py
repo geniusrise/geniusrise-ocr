@@ -15,9 +15,9 @@
 
 import os
 import json
-from transformers import TROCRProcessor, TROCRForConditionalGeneration
+from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from PIL import Image
-from geniusrise.core.data import BatchInput, BatchOutput, State
+from geniusrise import BatchInput, BatchOutput, State
 from geniusrise.logging import setup_logger
 from geniusrise import Bolt
 import torch
@@ -85,8 +85,8 @@ class TROCRImageOCR(Bolt):
         """
         device = "cuda:0" if use_cuda and torch.cuda.is_available() else "cpu"
 
-        self.processor = TROCRProcessor.from_pretrained(f"microsoft/trocr-large-{kind}")
-        self.model = TROCRForConditionalGeneration.from_pretrained(f"microsoft/trocr-large-{kind}").to(device)
+        self.processor = TrOCRProcessor.from_pretrained(f"microsoft/trocr-large-{kind}")
+        self.model = VisionEncoderDecoderModel.from_pretrained(f"microsoft/trocr-large-{kind}").to(device)
 
         input_folder = self.input.input_folder
 

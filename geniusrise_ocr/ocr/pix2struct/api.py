@@ -17,7 +17,7 @@ import io
 import base64
 from transformers import Pix2StructProcessor, Pix2StructForConditionalGeneration
 from PIL import Image
-from geniusrise.core.data import BatchInput, BatchOutput, State
+from geniusrise import BatchInput, BatchOutput, State
 from geniusrise.logging import setup_logger
 from geniusrise import Bolt
 import torch

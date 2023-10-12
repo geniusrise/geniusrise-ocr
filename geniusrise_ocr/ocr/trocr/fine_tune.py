@@ -13,13 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from transformers import TROCRProcessor, TROCRForConditionalGeneration
+from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from torch.utils.data import DataLoader
 import torch.optim as optim
 import torch.nn as nn
 import torch
 import torchvision.transforms as transforms
-from geniusrise.core.data import BatchInput, BatchOutput, State
+from geniusrise import BatchInput, BatchOutput, State
 from geniusrise.logging import setup_logger
 from geniusrise import Bolt
 from geniusrise_ocr.ocr.dataset import CustomOCRDataset
@@ -112,8 +112,8 @@ class FineTuneTROCR(Bolt):
         dataset = CustomOCRDataset(root_dir=self.input.input_folder, transform=transform, dataset_format=dataset_format)
         dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
-        model = TROCRForConditionalGeneration.from_pretrained("microsoft/trocr-large-printed").to(device)
-        processor = TROCRProcessor.from_pretrained("microsoft/trocr-large-printed")
+        model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-large-printed").to(device)
+        processor = TrOCRProcessor.from_pretrained("microsoft/trocr-large-printed")
 
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)

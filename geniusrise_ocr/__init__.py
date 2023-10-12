@@ -13,5 +13,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .image import ConvertImage
-from .pdf import ParsePdf
+from .readers import (
+    ConvertImage,
+    ParsePdf,
+)
+
+from .ocr import (
+    TROCRImageOCRAPI,
+    TROCRImageOCR,
+    FineTuneTROCR,
+    Pix2StructImageOCRAPI,
+    Pix2StructImageOCR,
+    FineTunePix2Struct,
+    CustomOCRDataset,
+)
+
+from .classification import (
+    ImageClassPredictor,
+    TrainImageClassifier,
+)

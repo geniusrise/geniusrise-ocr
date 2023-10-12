@@ -16,7 +16,7 @@
 from PIL import Image
 import os
 from typing import Optional
-from geniusrise.core.data import BatchInput, BatchOutput, State
+from geniusrise import BatchInput, BatchOutput, State
 from geniusrise.logging import setup_logger
 from geniusrise import Bolt
 

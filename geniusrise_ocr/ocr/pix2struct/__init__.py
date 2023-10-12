@@ -12,3 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from .api import Pix2StructImageOCRAPI
+from .bulk import Pix2StructImageOCR
+from .fine_tune import FineTunePix2Struct

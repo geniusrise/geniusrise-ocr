@@ -21,7 +21,7 @@ import torch.optim as optim
 import torchvision.transforms as transforms
 from torchvision import datasets, models
 from torch.utils.data import DataLoader
-from geniusrise.core.data import BatchInput, BatchOutput, State
+from geniusrise import BatchInput, BatchOutput, State
 from geniusrise.logging import setup_logger
 from geniusrise import Bolt
 
