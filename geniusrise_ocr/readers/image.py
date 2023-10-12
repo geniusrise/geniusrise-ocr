@@ -23,21 +23,73 @@ from geniusrise import Bolt
 
 class ConvertImage(Bolt):
     def __init__(self, input: BatchInput, output: BatchOutput, state: State, **kwargs) -> None:
+        r"""
+        The `ConvertImage` class is designed to convert images from one format to another.
+        It takes an input folder containing images and an output format as arguments.
+        The class iterates through each image file in the specified folder and converts it to the desired format.
+        Additional options like quality and subsampling can be specified for lossy formats like 'JPG'.
+
+        Args:
+            input (BatchInput): An instance of the BatchInput class for reading the data.
+            output (BatchOutput): An instance of the BatchOutput class for saving the data.
+            state (State): An instance of the State class for maintaining the state.
+            **kwargs: Additional keyword arguments.
+
+        ## Using geniusrise to invoke via command line
+        ```bash
+        genius ConvertImage rise \
+            batch \
+                --bucket my_bucket \
+                --s3_folder s3/input \
+            batch \
+                --bucket my_bucket \
+                --s3_folder s3/output \
+            none \
+            process \
+                --args input_folder=/path/to/image/folder output_format=PNG quality=95 subsampling=0
+        ```
+
+        ## Using geniusrise to invoke via YAML file
+        ```yaml
+        version: "1"
+        spouts:
+            convert_images:
+                name: "ConvertImage"
+                method: "process"
+                args:
+                    output_format: "PNG"
+                    quality: 95
+                    subsampling: 0
+                input:
+                    type: "batch"
+                    args:
+                        bucket: "my_bucket"
+                        s3_folder: "s3/input"
+                output:
+                    type: "batch"
+                    args:
+                        bucket: "my_bucket"
+                        s3_folder: "s3/output"
+        ```
+        """
         super().__init__(input, output, state, **kwargs)
         self.log = setup_logger(self.state)
 
-    def process(
-        self, input_folder: str, output_format: str, quality: Optional[int] = None, subsampling: Optional[int] = 0
-    ) -> None:
+    def process(self, output_format: str, quality: Optional[int] = None, subsampling: Optional[int] = 0) -> None:
         """
-        Convert images in the given input folder to the specified output format.
+        📖 Convert images in the given input folder to the specified output format.
 
         Args:
-            input_folder (str): The folder containing images to convert.
             output_format (str): The format to convert images to ('PNG' or 'JPG').
-            quality (Optional[int]): The quality of the output image for lossy formats like 'JPG'.
-            subsampling (Optional[int]): The subsampling factor for JPEG compression.
+            quality (Optional[int]): The quality of the output image for lossy formats like 'JPG'. Defaults to None.
+            subsampling (Optional[int]): The subsampling factor for JPEG compression. Defaults to 0.
+
+        This method iterates through each image file in the specified folder, reads the image,
+        and converts it to the specified output format. Additional parameters like quality and subsampling
+        can be set for lossy formats.
         """
+        input_folder = self.input.input_folder
+
         for image_file in os.listdir(input_folder):
             file_extension = image_file.lower().split(".")[-1]
 
