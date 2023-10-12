@@ -12,6 +12,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+
 import torch
 import torch.nn as nn
 import os
@@ -27,18 +29,18 @@ from geniusrise import Bolt
 class TrainImageClassifier(Bolt):
     def __init__(self, input: BatchInput, output: BatchOutput, state: State, **kwargs) -> None:
         r"""
-        The `TrainImageClassifier` class is designed to train an image classifier using a ResNet-152 model.
+        The `TrainImageClassifier` class trains an image classifier using a ResNet-152 model.
         It assumes that the `input.input_folder` contains sub-folders named 'train' and 'test'.
         Each of these sub-folders should contain class-specific folders with images.
-        The trained model is saved to the specified output path.
+        The trained model is saved as 'model.pth' in `output.output_folder`.
 
         Args:
-            input (BatchInput): An instance of the BatchInput class for reading the data.
-            output (BatchOutput): An instance of the BatchOutput class for saving the data.
-            state (State): An instance of the State class for maintaining the state.
+            input (BatchInput): Instance of BatchInput for reading data.
+            output (BatchOutput): Instance of BatchOutput for saving data.
+            state (State): Instance of State for maintaining state.
             **kwargs: Additional keyword arguments.
 
-        ## Using geniusrise to invoke via command line
+        ## Command Line Invocation with geniusrise
         ```bash
         genius TrainImageClassifier rise \
             batch \
@@ -49,10 +51,10 @@ class TrainImageClassifier(Bolt):
                 --s3_folder s3/output \
             none \
             process \
-                --args output_model_path=/path/to/model.pth num_classes=4 epochs=10 batch_size=32 learning_rate=0.001
+                --args num_classes=4 epochs=10 batch_size=32 learning_rate=0.001
         ```
 
-        ## Using geniusrise to invoke via YAML file
+        ## YAML Configuration with geniusrise
         ```yaml
         version: "1"
         spouts:
@@ -85,21 +87,25 @@ class TrainImageClassifier(Bolt):
         epochs: int = 10,
         batch_size: int = 32,
         learning_rate: float = 0.001,
+        use_cuda: bool = False,
     ) -> None:
         """
         📖 Train an image classifier using a ResNet-152 model.
 
         Args:
             num_classes (int): Number of classes of the images.
-            epochs (Optional[int]): Number of training epochs. Default is 10.
-            batch_size (Optional[int]): Batch size for training. Default is 32.
-            learning_rate (Optional[float]): Learning rate for the optimizer. Default is 0.001.
+            epochs (int): Number of training epochs. Default is 10.
+            batch_size (int): Batch size for training. Default is 32.
+            learning_rate (float): Learning rate for the optimizer. Default is 0.001.
+            use_cuda (bool): Whether to use CUDA for model training. Default is False.
 
         This method trains a ResNet-152 model using the images in the 'train' and 'test' sub-folders
         of `input.input_folder`. Each of these sub-folders should contain class-specific folders with images.
-        The trained model is saved to the specified output path.
+        The trained model is saved as 'model.pth' in `output.output_folder`.
         """
-        output_model_path = self.output.output_folder + "/model.pth"
+        device = "cuda:0" if use_cuda and torch.cuda.is_available() else "cpu"
+
+        output_model_path = os.path.join(self.output.output_folder, "model.pth")
 
         # Data transformations
         transform = transforms.Compose(
@@ -120,7 +126,7 @@ class TrainImageClassifier(Bolt):
         test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
         # Initialize the model
-        model = models.resnet152(pretrained=True)
+        model = models.resnet152(pretrained=True).to(device)
         num_ftrs = model.fc.in_features
         model.fc = nn.Linear(num_ftrs, num_classes)
 
@@ -132,6 +138,7 @@ class TrainImageClassifier(Bolt):
         for epoch in range(epochs):
             model.train()
             for _, (inputs, labels) in enumerate(train_loader):
+                inputs, labels = inputs.to(device), labels.to(device)
                 optimizer.zero_grad()
                 outputs = model(inputs)
                 loss = criterion(outputs, labels)

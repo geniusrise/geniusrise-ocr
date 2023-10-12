@@ -27,18 +27,17 @@ from geniusrise import Bolt
 class ImageClassPredictor(Bolt):
     def __init__(self, input: BatchInput, output: BatchOutput, state: State, **kwargs) -> None:
         r"""
-        The `ImageClassPredictor` class is designed to classify images using a pre-trained PyTorch model.
-        It takes an input folder containing sub-folders of images and a path to the pre-trained model as arguments.
-        The class iterates through each image file in the specified sub-folders, applies the model, and classifies the image.
-        The classified images are then saved in an output folder, organized by their predicted labels.
+        The `ImageClassPredictor` class classifies images using a pre-trained PyTorch model.
+        It assumes that the `input.input_folder` contains sub-folders of images to be classified.
+        The classified images are saved in `output.output_folder`, organized by their predicted labels.
 
         Args:
-            input (BatchInput): An instance of the BatchInput class for reading the data.
-            output (BatchOutput): An instance of the BatchOutput class for saving the data.
-            state (State): An instance of the State class for maintaining the state.
+            input (BatchInput): Instance of BatchInput for reading data.
+            output (BatchOutput): Instance of BatchOutput for saving data.
+            state (State): Instance of State for maintaining state.
             **kwargs: Additional keyword arguments.
 
-        ## Using geniusrise to invoke via command line
+        ## Command Line Invocation with geniusrise
         ```bash
         genius ImageClassPredictor rise \
             batch \
@@ -52,7 +51,7 @@ class ImageClassPredictor(Bolt):
                 --args classes='{"0": "cat", "1": "dog"}' model_path=/path/to/model.pth
         ```
 
-        ## Using geniusrise to invoke via YAML file
+        ## YAML Configuration with geniusrise
         ```yaml
         version: "1"
         spouts:
@@ -78,23 +77,26 @@ class ImageClassPredictor(Bolt):
         self.log = setup_logger(self.state)
         self.classes: Dict[int, str] = {}
 
-    def predict(self, classes: str, model_path: str) -> None:
+    def predict(self, classes: str, model_path: str, use_cuda: bool = False) -> None:
         """
-        📖 Classify images in the given input folders using a pre-trained PyTorch model.
+        📖 Classify images in the input sub-folders using a pre-trained PyTorch model.
 
         Args:
             classes (str): JSON string mapping class indices to labels.
             model_path (str): Path to the pre-trained PyTorch model.
+            use_cuda (bool): Whether to use CUDA for model inference. Default is False.
 
         This method iterates through each image file in the specified sub-folders, applies the model,
         and classifies the image. The classified images are then saved in an output folder, organized by their predicted labels.
         """
+        device = "cuda" if use_cuda and torch.cuda.is_available() else "cpu"
+
         self.classes = json.loads(classes)
         input_folder = self.input.input_folder
         input_folders = os.listdir(input_folder)
 
         # Load the model
-        model = torch.load(model_path)
+        model = torch.load(model_path).to(device)
         model.eval()
 
         transform = transforms.Compose(
@@ -111,7 +113,7 @@ class ImageClassPredictor(Bolt):
 
                 image_path = os.path.join(folder, image_file)
                 image = Image.open(image_path).convert("RGB")
-                image = transform(image)
+                image = transform(image).to(device)
                 image = image.unsqueeze(0)
 
                 with torch.no_grad():

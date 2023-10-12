@@ -1,6 +1,6 @@
-![banner](./assets/banner.jpg)
+![banner](./assets/logo_with_text.png)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-# OCR
+# geniusrise-OCR
