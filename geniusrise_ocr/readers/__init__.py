@@ -15,3 +15,9 @@
 
 from .image import ConvertImage
 from .pdf import ParsePdf
+from .epub import ParseEpub
+from .djvu import ParseDjvu
+from .postscript import ParsePostScript
+from .cbz_cbr import ParseCBZCBR
+from .xps import ParseXPS
+from .mobi import ParseMOBI

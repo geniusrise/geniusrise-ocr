@@ -16,6 +16,12 @@
 from .readers import (
     ConvertImage,
     ParsePdf,
+    ParseEpub,
+    ParseDjvu,
+    ParsePostScript,
+    ParseCBZCBR,
+    ParseXPS,
+    ParseMOBI,
 )
 
 from .ocr import (

@@ -17,7 +17,7 @@ import os
 import json
 import random
 from typing import List, Optional
-from PyPDF2 import PdfFileReader
+from PyPDF2 import PdfReader
 from pdf2image import convert_from_path
 from geniusrise import BatchInput, BatchOutput, State
 from geniusrise.logging import setup_logger
@@ -85,15 +85,15 @@ class ParsePdf(Bolt):
         and determines whether the PDF is text-based or image-based. It then delegates further processing
         to `_process_text_pdf` or `_process_image_pdf` based on this determination.
         """
-        input_folder = input_folder if input_folder else self.input.input_folder
+        input_folder = input_folder if input_folder else os.path.join(self.input.input_folder, self.input.s3_folder)
 
         for pdf_file in os.listdir(input_folder):
             if not pdf_file.endswith(".pdf"):
                 continue
 
             pdf_path = os.path.join(input_folder, pdf_file)
-            pdf_reader = PdfFileReader(open(pdf_path, "rb"))
-            total_pages = pdf_reader.getNumPages()
+            pdf_reader = PdfReader(open(pdf_path, "rb"))
+            total_pages = len(pdf_reader.pages)
 
             # Randomly sample 3 pages to determine PDF type
             sample_pages = random.sample(range(total_pages), min(3, total_pages))
@@ -102,7 +102,7 @@ class ParsePdf(Bolt):
             image_count = 0
 
             for page_num in sample_pages:
-                page = pdf_reader.getPage(page_num)
+                page = pdf_reader.pages[page_num]
                 text_content = page.extract_text()
 
                 if text_content.strip():
@@ -127,12 +127,12 @@ class ParsePdf(Bolt):
         This method reads each page of the text-based PDF, extracts the text content, and saves it
         as a JSON file in the output folder.
         """
-        pdf_reader = PdfFileReader(open(pdf_path, "rb"))
-        total_pages = pdf_reader.getNumPages()
+        pdf_reader = PdfReader(open(pdf_path, "rb"))
+        total_pages = len(pdf_reader.pages)
         text_data: List[str] = []
 
         for page_num in range(total_pages):
-            page = pdf_reader.getPage(page_num)
+            page = pdf_reader.pages[page_num]
             text_content = page.extract_text()
             text_data.append(text_content.strip())
 

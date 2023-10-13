@@ -64,3 +64,5 @@ repos:
       - id: mypy
         additional_dependencies:
           - types-requests
+
+exclude: ^tests
