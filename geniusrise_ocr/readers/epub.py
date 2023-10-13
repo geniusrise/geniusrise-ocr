@@ -13,14 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import json
+import os
+from typing import List, Optional
+
 import ebooklib
 from ebooklib import epub
-from typing import List, Optional
-from geniusrise import BatchInput, BatchOutput, State
+from geniusrise import BatchInput, BatchOutput, Bolt, State
 from geniusrise.logging import setup_logger
-from geniusrise import Bolt
 
 
 class ParseEpub(Bolt):

@@ -13,11 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .image import ConvertImage
-from .pdf import ParsePdf
-from .epub import ParseEpub
-from .djvu import ParseDjvu
-from .postscript import ParsePostScript
 from .cbz_cbr import ParseCBZCBR
-from .xps import ParseXPS
+from .djvu import ParseDjvu
+from .epub import ParseEpub
+from .image import ConvertImage
 from .mobi import ParseMOBI
+from .pdf import ParsePdf
+from .postscript import ParsePostScript
+from .xps import ParseXPS

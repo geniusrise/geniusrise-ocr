@@ -13,16 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .trocr import (
-    TROCRImageOCRAPI,
-    TROCRImageOCR,
-    FineTuneTROCR,
-)
-
-from .pix2struct import (
-    Pix2StructImageOCRAPI,
-    Pix2StructImageOCR,
-    FineTunePix2Struct,
-)
-
 from .dataset import CustomOCRDataset
+from .pix2struct import FineTunePix2Struct, Pix2StructImageOCR, Pix2StructImageOCRAPI
+from .trocr import FineTuneTROCR, TROCRImageOCR, TROCRImageOCRAPI

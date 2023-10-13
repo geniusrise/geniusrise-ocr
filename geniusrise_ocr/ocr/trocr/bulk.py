@@ -13,14 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import json
-from transformers import TrOCRProcessor, VisionEncoderDecoderModel
-from PIL import Image
-from geniusrise import BatchInput, BatchOutput, State
-from geniusrise.logging import setup_logger
-from geniusrise import Bolt
+import os
+
 import torch
+from geniusrise import BatchInput, BatchOutput, Bolt, State
+from geniusrise.logging import setup_logger
+from PIL import Image
+from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 
 
 class TROCRImageOCR(Bolt):

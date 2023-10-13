@@ -14,11 +14,11 @@
 # limitations under the License.
 
 import os
-import fitz  # PyMuPDF
 from typing import Optional
-from geniusrise import BatchInput, BatchOutput, State
+
+import fitz  # PyMuPDF
+from geniusrise import BatchInput, BatchOutput, Bolt, State
 from geniusrise.logging import setup_logger
-from geniusrise import Bolt
 
 
 class ParseXPS(Bolt):

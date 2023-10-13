@@ -13,10 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import os
 import tempfile
-import json
+
 from geniusrise import BatchInput, BatchOutput, InMemoryState
+
 from geniusrise_ocr import ParseCBZCBR
 
 

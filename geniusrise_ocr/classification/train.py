@@ -14,16 +14,16 @@
 # limitations under the License.
 
 
+import os
+
 import torch
 import torch.nn as nn
-import os
 import torch.optim as optim
 import torchvision.transforms as transforms
-from torchvision import datasets, models
-from torch.utils.data import DataLoader
-from geniusrise import BatchInput, BatchOutput, State
+from geniusrise import BatchInput, BatchOutput, Bolt, State
 from geniusrise.logging import setup_logger
-from geniusrise import Bolt
+from torch.utils.data import DataLoader
+from torchvision import datasets, models
 
 
 class TrainImageClassifier(Bolt):

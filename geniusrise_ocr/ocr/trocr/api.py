@@ -13,16 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import io
 import base64
-from transformers import TrOCRProcessor, VisionEncoderDecoderModel
-from PIL import Image
-from geniusrise import BatchInput, BatchOutput, State
-from geniusrise.logging import setup_logger
-from geniusrise import Bolt
-import torch
+import io
+from typing import Any, Dict, Optional
+
 import cherrypy
-from typing import Dict, Any, Optional
+import torch
+from geniusrise import BatchInput, BatchOutput, Bolt, State
+from geniusrise.logging import setup_logger
+from PIL import Image
+from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 
 
 class TROCRImageOCRAPI(Bolt):

@@ -13,14 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import json
-from transformers import Pix2StructProcessor, Pix2StructForConditionalGeneration
-from PIL import Image
-from geniusrise import BatchInput, BatchOutput, State
-from geniusrise.logging import setup_logger
-from geniusrise import Bolt
+import os
+
 import torch
+from geniusrise import BatchInput, BatchOutput, Bolt, State
+from geniusrise.logging import setup_logger
+from PIL import Image
+from transformers import Pix2StructForConditionalGeneration, Pix2StructProcessor
 
 
 class Pix2StructImageOCR(Bolt):

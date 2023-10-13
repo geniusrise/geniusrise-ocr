@@ -13,15 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import json
+import os
 import random
 from typing import List, Optional
-from PyPDF2 import PdfReader
-from pdf2image import convert_from_path
-from geniusrise import BatchInput, BatchOutput, State
+
+from geniusrise import BatchInput, BatchOutput, Bolt, State
 from geniusrise.logging import setup_logger
-from geniusrise import Bolt
+from pdf2image import convert_from_path
+from PyPDF2 import PdfReader
 
 
 class ParsePdf(Bolt):

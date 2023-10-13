@@ -13,28 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .readers import (
-    ConvertImage,
-    ParsePdf,
-    ParseEpub,
-    ParseDjvu,
-    ParsePostScript,
-    ParseCBZCBR,
-    ParseXPS,
-    ParseMOBI,
-)
-
+from .classification import ImageClassPredictor, TrainImageClassifier
 from .ocr import (
-    TROCRImageOCRAPI,
-    TROCRImageOCR,
-    FineTuneTROCR,
-    Pix2StructImageOCRAPI,
-    Pix2StructImageOCR,
-    FineTunePix2Struct,
     CustomOCRDataset,
+    FineTunePix2Struct,
+    FineTuneTROCR,
+    Pix2StructImageOCR,
+    Pix2StructImageOCRAPI,
+    TROCRImageOCR,
+    TROCRImageOCRAPI,
 )
-
-from .classification import (
-    ImageClassPredictor,
-    TrainImageClassifier,
-)
+from .readers import ConvertImage, ParseCBZCBR, ParseDjvu, ParseEpub, ParseMOBI, ParsePdf, ParsePostScript, ParseXPS

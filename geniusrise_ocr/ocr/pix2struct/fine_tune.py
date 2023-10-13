@@ -13,15 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from transformers import Pix2StructProcessor, Pix2StructForConditionalGeneration
-from torch.utils.data import DataLoader
-import torch.optim as optim
-import torch.nn as nn
 import torch
+import torch.nn as nn
+import torch.optim as optim
 import torchvision.transforms as transforms
-from geniusrise import BatchInput, BatchOutput, State
+from geniusrise import BatchInput, BatchOutput, Bolt, State
 from geniusrise.logging import setup_logger
-from geniusrise import Bolt
+from torch.utils.data import DataLoader
+from transformers import Pix2StructForConditionalGeneration, Pix2StructProcessor
+
 from geniusrise_ocr.ocr.dataset import CustomOCRDataset
 
 

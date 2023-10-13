@@ -15,11 +15,11 @@
 
 import os
 import zipfile
-import rarfile
 from typing import Optional
-from geniusrise import BatchInput, BatchOutput, State
+
+import rarfile
+from geniusrise import BatchInput, BatchOutput, Bolt, State
 from geniusrise.logging import setup_logger
-from geniusrise import Bolt
 
 
 class ParseCBZCBR(Bolt):

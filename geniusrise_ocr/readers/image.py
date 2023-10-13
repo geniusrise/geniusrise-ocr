@@ -13,12 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from PIL import Image
 import os
 from typing import Optional
-from geniusrise import BatchInput, BatchOutput, State
+
+from geniusrise import BatchInput, BatchOutput, Bolt, State
 from geniusrise.logging import setup_logger
-from geniusrise import Bolt
+from PIL import Image
 
 
 class ConvertImage(Bolt):

@@ -13,15 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import json
+import os
+from typing import Dict
+
 import torch
 import torchvision.transforms as transforms
-from PIL import Image
-from typing import Dict
-from geniusrise import BatchInput, BatchOutput, State
+from geniusrise import BatchInput, BatchOutput, Bolt, State
 from geniusrise.logging import setup_logger
-from geniusrise import Bolt
+from PIL import Image
 
 
 class ImageClassPredictor(Bolt):

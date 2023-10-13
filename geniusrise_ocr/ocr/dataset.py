@@ -13,12 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from torch.utils.data import Dataset
-from PIL import Image
-from typing import List, Tuple
-import os
 import json
+import os
 import xml.etree.ElementTree as ET
+from typing import List, Tuple
+
+from PIL import Image
+from torch.utils.data import Dataset
 
 
 class CustomOCRDataset(Dataset):
