@@ -149,7 +149,7 @@ class Pix2StructImageOCRAPI(Bolt):
         )
 
         cherrypy.tools.CORS = cherrypy.Tool("before_handler", CORS)
-        cherrypy.tree.mount(self, "/api/v1/", {"/": {"tools.CORS.on": True}})
+        cherrypy.tree.mount(self, "/api/v1/pix2struct/", {"/": {"tools.CORS.on": True}})
         cherrypy.tools.CORS = cherrypy.Tool("before_finalize", CORS)
         cherrypy.engine.start()
         cherrypy.engine.block()

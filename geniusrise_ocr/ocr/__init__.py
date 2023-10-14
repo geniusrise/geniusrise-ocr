@@ -16,3 +16,4 @@
 from .dataset import CustomOCRDataset
 from .pix2struct import FineTunePix2Struct, Pix2StructImageOCR, Pix2StructImageOCRAPI
 from .trocr import FineTuneTROCR, TROCRImageOCR, TROCRImageOCRAPI
+from .doctr import DoctrImageOCRAPI

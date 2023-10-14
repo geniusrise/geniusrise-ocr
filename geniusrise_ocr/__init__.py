@@ -22,5 +22,6 @@ from .ocr import (
     Pix2StructImageOCRAPI,
     TROCRImageOCR,
     TROCRImageOCRAPI,
+    DoctrImageOCRAPI,
 )
 from .readers import ConvertImage, ParseCBZCBR, ParseDjvu, ParseEpub, ParseMOBI, ParsePdf, ParsePostScript, ParseXPS
